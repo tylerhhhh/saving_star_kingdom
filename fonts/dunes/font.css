@@ -6,4 +6,6 @@ h1 {
 	src: url('https://tylerhhhh.github.io/saving_star_kingdom/fonts/dunes/Marlboro.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+	letter-spacing: 10px;
+	word-spacing: 20px
 }
