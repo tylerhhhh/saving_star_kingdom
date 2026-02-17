@@ -1,0 +1,9 @@
+h1 {
+    color: white;
+}
+@font-face {
+	font-family: 'PeriwinklePines';
+	src: url('https://tylerhhhh.github.io/saving_star_kingdom/fonts/dunes/PrincessSofia-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
