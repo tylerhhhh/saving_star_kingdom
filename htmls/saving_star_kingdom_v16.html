@@ -27,7 +27,7 @@
 
 /* ----- Draw red outline around each element - DEBUGGING PURPOSES!!!! ----- */
 
-
+/*
 * {
   outline: 1px solid red;
 }
@@ -35,7 +35,7 @@
 
 /* ----- Set placeholder character images - DEBUGGING PURPOSES!!!! ----- */
 .player-char {
-  background-image: url('https://tylerhhhh.github.io/saving_star_kingdom/characters/character-placeholder.png');
+  background-image: url('https://placehold.co/800x800?text=Meep');
 }
 .npc-char {
   background-image: url('https://placehold.co/800x800?text=Witch');
@@ -195,6 +195,14 @@ tw-expression [name="input-box"] textarea {
   pointer-events: none;
 }
 
+.click-image:nth-child(1) tw-link {
+  background-image: url('https://tylerhhhh.github.io/saving_star_kingdom/characters/player_boy.png'), linear-gradient(180deg, #4cbff5 0%, #358cb8 100%);
+}
+
+.click-image:nth-child(2) tw-link {
+  background-image: url('https://tylerhhhh.github.io/saving_star_kingdom/characters/player_girl.png'), linear-gradient(180deg, #b6bfff 0%, #8484ba 100%);
+}
+
 /* Style links as clickable images */
 .click-image tw-link {
   height: 80%;
@@ -296,8 +304,9 @@ tw-expression [name="input-box"] textarea {
   /* Text formatting */
   color: black;
   padding: 25px;
-  
-  font-size: 1.8vw;
+  /*
+  font-size: 1.8vw;*/
+  font-size: clamp(0.8vw, 1.5vw, 1.8vw);
   text-align: center;
   
   /* Border formatting */
@@ -373,7 +382,6 @@ tw-expression [name="input-box"] textarea {
 .choices-container tw-link:hover {
   transform: translateY(-1.1vh);
   box-shadow: 1vh 1vh rgba(0,0,0,0.5);
-  font-size: 1.6vw;
 }
 
 
@@ -464,8 +472,8 @@ tw-expression [name="input-box"] textarea {
   left: 50vw;
   transform: translate(-50%, -50%);
   
-  width: 50vw;
-  height: 70vh;
+  width: 60vw;
+  height: 80vh;
   
   
   justify-content: center;
@@ -494,7 +502,7 @@ tw-expression [name="input-box"] textarea {
   width: 100%;*/
   height: 50%;
   
-  background-image: url("https://placehold.co/800x200?text=Title");
+  background-image: url("https://tylerhhhh.github.io/saving_star_kingdom/logo/starkingdomlogo.png");
   background-size: contain;
   background-repeat: no-repeat;
   
@@ -625,13 +633,33 @@ tw-expression [name="input-box"] textarea {
   font-size: 1.6vw;
 }
 
-
+.cloud7logo {
+  position: fixed;
+  left: 1vh;
+  bottom: 1vh;
+  
+  width: 10vh;
+  height: 10vh;
+  
+  background-image: url("https://tylerhhhh.github.io/saving_star_kingdom/logo/cloud7logo.png");
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  
+  /* Center image */
+  background-position: center;
+  
+}
 </style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="startup" color="yellow"></tw-tag>,<tw-tag name="widget" color="purple"></tw-tag><tw-passagedata pid="1" name="sceneTemplate" tags="" position="100,25" size="200,200">{
 (enchant: ?page,
     (bg: $currentLocationPalette&#39;s &quot;bg_image&quot;)
 )
 
-(print: &quot;&lt;div class=&#39;location-label&#39; style=&#39;background: &quot; + (text: $currentLocationPalette&#39;s &quot;c_2&quot;) + &quot;; font-family: &quot; + $currentLocationPalette&#39;s &quot;f_name&quot; + &quot;&#39;&gt;&quot; + $currentLocationPalette&#39;s &quot;l_name&quot; + &quot;&lt;/div&gt;&quot;)
+(if: $currentLocationPalette&#39;s &quot;l_name&quot; is not &quot;&quot;)[
+	(print: &quot;&lt;div class=&#39;location-label&#39; style=&#39;background: &quot; + (text:
+	$currentLocationPalette&#39;s &quot;c_2&quot;) + &quot;; font-family: &quot; +
+	$currentLocationPalette&#39;s &quot;f_name&quot; + &quot;&#39;&gt;&quot; + $currentLocationPalette&#39;s 
+	&quot;l_name&quot; + &quot;&lt;/div&gt;&quot;)]
 
 &lt;!--&lt;div class=&#39;character npc-char&#39;&gt;&lt;/div&gt;--&gt;
 
@@ -667,9 +695,9 @@ tw-expression [name="input-box"] textarea {
 
 (else:)[
 &lt;div class=&quot;choices-container&quot; id=&quot;choices&quot;&gt;
-\(if: $choice1_text is not &quot;&quot;) [ (link: $choice1_text) [ (go-to: $choice1_target) ] ]\
-\(if: $choice2_text is not &quot;&quot;) [ (link: $choice2_text) [ (go-to: $choice2_target) ] ]\
-\(if: $choice3_text is not &quot;&quot;) [ (link: $choice3_text) [ (go-to: $choice3_target) ] ]\
+\(if: $choice1_text is not &quot;&quot;) [ (link: $choice1_text) [(set: $lastChoice to 1) (go-to: $choice1_target) ] ]\
+\(if: $choice2_text is not &quot;&quot;) [ (link: $choice2_text) [(set: $lastChoice to 2) (go-to: $choice2_target) ] ]\
+\(if: $choice3_text is not &quot;&quot;) [ (link: $choice3_text) [(set: $lastChoice to 3) (go-to: $choice3_target) ] ]\
 &lt;/div&gt;]
 }
 </tw-passagedata><tw-passagedata pid="2" name="Passage Example" tags="" position="350,750" size="200,200">&lt;!----- Set UI Palette -----&gt;
@@ -697,70 +725,112 @@ tw-expression [name="input-box"] textarea {
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="3" name="Location Palettes" tags="startup" position="100,250" size="200,100">&lt;!-- Location Palettes determine the colour of UI elements in each location, as well as the background image --&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="3" name="Location Palettes" tags="startup" position="NaN,250" size="200,100">&lt;!-- Location Palettes determine the colour of UI elements in each location, as well as the background image --&gt;
 
 (set: $locationPalette to (dm:
-&quot;marsh&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#bdd8a2&#39;,
-	&quot;c_2&quot;, &#39;#a0b356&#39;, 
-	&quot;font_col&quot;, &#39;#000000&#39;, 
-	&quot;f_name&quot;, &#39;MagicMarsh&#39;, 
-	&quot;l_name&quot;, &#39;Magical Marsh&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
-		),
-        
-&quot;kingdom&quot;, (dm: 
+&quot;noLoc&quot;, (dm: 
 	&quot;c_1&quot;, &#39;#ffeaa7&#39;,
 	&quot;c_2&quot;, &#39;#fdcb6e&#39;, 
 	&quot;font_col&quot;, &#39;#000000&#39;, 
+	&quot;f_name&quot;, &#39;MagicMarsh&#39;, 
+	&quot;l_name&quot;, &#39;&#39;,
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;,
+	&quot;state_1&quot;, &quot;&quot;,
+	&quot;state_2&quot;, &quot;&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
+		),
+&quot;void&quot;, (dm: 
+	&quot;c_1&quot;, &#39;#b6bfffea&#39;,
+	&quot;c_2&quot;, &#39;#8484baea&#39;, 
+	&quot;font_col&quot;, &#39;#000000&#39;, 
+	&quot;f_name&quot;, &#39;MagicMarsh&#39;, 
+	&quot;l_name&quot;, &#39;Void&#39;,
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_void_1.png&quot;,
+	&quot;state_1&quot;, &quot;&quot;,
+	&quot;state_2&quot;, &quot;&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
+		),
+&quot;marsh&quot;, (dm: 
+	&quot;c_1&quot;, &#39;#bdd8a2ea&#39;,
+	&quot;c_2&quot;, &#39;#a0b356ea&#39;, 
+	&quot;font_col&quot;, &#39;#000000&#39;, 
+	&quot;f_name&quot;, &#39;MagicMarsh&#39;, 
+	&quot;l_name&quot;, &#39;Magical Marsh&#39;,
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_marsh_1.png&quot;,
+	&quot;state_1&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_marsh_1.png&quot;,
+	&quot;state_2&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_marsh_2.png&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
+		),
+&quot;kingdom&quot;, (dm: 
+	&quot;c_1&quot;, &#39;#ffeaa7ea&#39;,
+	&quot;c_2&quot;, &#39;#fdcb6eea&#39;, 
+	&quot;font_col&quot;, &#39;#000000&#39;, 
 	&quot;f_name&quot;, &#39;StarKingdom&#39;, 
 	&quot;l_name&quot;, &#39;Star Kingdom&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_kingdom_1.png&quot;,
+	&quot;state_1&quot;, &quot;&quot;,
+	&quot;state_2&quot;, &quot;&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
 		),
         
 &quot;rapids&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#4cbff5&#39;,
-	&quot;c_2&quot;, &#39;#358cb8&#39;, 
+	&quot;c_1&quot;, &#39;#4cbff5ea&#39;,
+	&quot;c_2&quot;, &#39;#358cb8ea&#39;, 
 	&quot;font_col&quot;, &#39;#6c5ce7&#39;, 
 	&quot;f_name&quot;, &#39;RushingRapids&#39;, 
-	&quot;l_name&quot;, &quot;Rushin&#39; Rapids&quot;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;l_name&quot;, &quot;Rushin&#39;  Rapids&quot;,
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_rapids_1.png&quot;,
+	&quot;state_1&quot;, &quot;&quot;,
+	&quot;state_2&quot;, &quot;&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
 		),
         
 &quot;pines&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#b6bfff&#39;,
-	&quot;c_2&quot;, &#39;#8484ba&#39;, 
+	&quot;c_1&quot;, &#39;#b6bfffea&#39;,
+	&quot;c_2&quot;, &#39;#8484baea&#39;, 
 	&quot;font_col&quot;, &#39;#6c5ce7&#39;, 
 	&quot;f_name&quot;, &#39;PeriwinklePines&#39;, 
 	&quot;l_name&quot;, &#39;Periwinkle Pines&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_pines_1.png&quot;,
+	&quot;state_1&quot;, &quot;&quot;,
+	&quot;state_2&quot;, &quot;&quot;,
+	&quot;state_3&quot;, &quot;&quot;,
 		),
         
 &quot;dunes&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#ffbe4f&#39;,
-	&quot;c_2&quot;, &#39;#c99347&#39;,
+	&quot;c_1&quot;, &#39;#ffbe4fea&#39;,
+	&quot;c_2&quot;, &#39;#c99347ea&#39;,
 	&quot;font_col&quot;, &#39;#6c5ce7&#39;, 
 	&quot;f_name&quot;, &#39;DustyDunes&#39;, 
 	&quot;l_name&quot;, &#39;Dusty Dunes&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_1.png&quot;,
+	&quot;state_1&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_1.png&quot;,
+	&quot;state_2&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_2.png&quot;,
+	&quot;state_3&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_3.png&quot;,
 		),
         
 &quot;frosty&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#aeebfc&#39;,
-	&quot;c_2&quot;, &#39;#96cad9&#39;, 
+	&quot;c_1&quot;, &#39;#aeebfcea&#39;,
+	&quot;c_2&quot;, &#39;#96cad9ea&#39;, 
 	&quot;font_col&quot;, &#39;#6c5ce7&#39;, 
 	&quot;f_name&quot;, &#39;FrostyFarlands&#39;, 
 	&quot;l_name&quot;, &#39;Frosty Farlands&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_frosty_1.png&quot;,
+	&quot;state_1&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_frosty_1.png&quot;,
+	&quot;state_2&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_frosty_2.png&quot;,
+	&quot;state_3&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_frosty_3.png&quot;,
 		),
         
 &quot;mountain&quot;, (dm: 
-	&quot;c_1&quot;, &#39;#cdcdcd&#39;,
-	&quot;c_2&quot;, &#39;#7d7d7d&#39;,
+	&quot;c_1&quot;, &#39;#cdcdcdea&#39;,
+	&quot;c_2&quot;, &#39;#7d7d7dea&#39;,
 	&quot;font_col&quot;, &#39;#6c5ce7&#39;, 
 	&quot;f_name&quot;, &#39;MtMountain&#39;, 
 	&quot;l_name&quot;, &#39;Mt. Mountain&#39;,
-	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;
+	&quot;bg_image&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_mountain_1.png&quot;,
+	&quot;state_1&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_mountain_1.png&quot;,
+	&quot;state_2&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_mountain_2.png&quot;,
+	&quot;state_3&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_mountain_3.png&quot;,
 		)
 	)
 )
@@ -795,10 +865,10 @@ tw-expression [name="input-box"] textarea {
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to &quot;This is a preview of the &#39;kingdom&#39;&quot;)
+(set: $dialogue to &quot;This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; paletteThis is a preview of the &#39;kingdom&#39; paletteThis is a preview of the &#39;kingdom&#39; palette This is a preview of the &#39;kingdom&#39; palette&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -956,17 +1026,17 @@ tw-expression [name="input-box"] textarea {
     	),
         &quot;king&quot;, (dm:
     	&quot;charName&quot;, &quot;King Star&quot;,
-        &quot;charSprite&quot;, &quot;https://placehold.co/800x800?text=King+Star&quot;,
+        &quot;charSprite&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/king.webp&quot;,
         &quot;charFont&quot;, &quot;&quot;
     	),
         &quot;merfolk&quot;, (dm:
     	&quot;charName&quot;, &quot;Merfolk&quot;,
-        &quot;charSprite&quot;, &quot;https://placehold.co/800x800?text=Merfolk&quot;,
+        &quot;charSprite&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/mermaid.webp&quot;,
         &quot;charFont&quot;, &quot;&quot;
     	),
         &quot;fairy&quot;, (dm:
-    	&quot;charName&quot;, &quot;Fandango&quot;,
-        &quot;charSprite&quot;, &quot;https://placehold.co/800x800?text=Fairy&quot;,
+    	&quot;charName&quot;, &quot;Fairy&quot;,
+        &quot;charSprite&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/fairy.png&quot;,
         &quot;charFont&quot;, &quot;&quot;
     	),
         &quot;cactus&quot;, (dm:
@@ -981,12 +1051,12 @@ tw-expression [name="input-box"] textarea {
     	),
         &quot;dwarf&quot;, (dm:
     	&quot;charName&quot;, &quot;Dwarf&quot;,
-        &quot;charSprite&quot;, &quot;https://placehold.co/800x800?text=Dwarf&quot;,
+        &quot;charSprite&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/dwarf.png&quot;,
         &quot;charFont&quot;, &quot;&quot;
     	),
         &quot;dragon&quot;, (dm:
     	&quot;charName&quot;, &quot;Dragon&quot;,
-        &quot;charSprite&quot;, &quot;https://placehold.co/800x800?text=Dragon&quot;,
+        &quot;charSprite&quot;, &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/dragon.png&quot;,
         &quot;charFont&quot;, &quot;&quot;
     	)
 	)
@@ -1014,7 +1084,7 @@ $characterPalette
 $currentCharacterPalette
 $currentCharacterPalette&#39;s &quot;charName&quot;
 $currentCharacterPalette&#39;s &quot;charFont&quot;
---&gt; </tw-passagedata><tw-passagedata pid="14" name="pines_1.0" tags="" position="1125,0" size="100,100">(if: $quests&#39;s &quot;getSeeds&quot;&#39;s &quot;questComplete&quot; is true)[(go-to: &quot;pines_5.0&quot;)]
+--&gt; </tw-passagedata><tw-passagedata pid="14" name="pines_1.0" tags="" position="1800,25" size="100,100">(if: $quests&#39;s &quot;getSeeds&quot;&#39;s &quot;questComplete&quot; is true)[(go-to: &quot;pines_5.0&quot;)]
 (else-if: $quests&#39;s &quot;getSeeds&quot;&#39;s &quot;hasQuest&quot; is true)[(go-to: &quot;pines_3.0&quot;)]
 
 &lt;!----- Set UI Palette -----&gt;
@@ -1042,7 +1112,7 @@ $currentCharacterPalette&#39;s &quot;charFont&quot;
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="15" name="pines_1.1" tags="" position="1125,105" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="15" name="pines_1.1" tags="" position="1800,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1067,7 +1137,7 @@ $currentCharacterPalette&#39;s &quot;charFont&quot;
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="16" name="pines_1.2" tags="" position="1125,205" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="16" name="pines_1.2" tags="" position="1800,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1093,7 +1163,7 @@ The fairy squints their eyes at you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="17" name="pines_1.3" tags="" position="1125,285" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="17" name="pines_1.3" tags="" position="1800,325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1119,7 +1189,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="18" name="pines_1.4" tags="" position="1125,405" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="18" name="pines_1.4" tags="" position="1800,425" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1144,7 +1214,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="19" name="pines_2.0" tags="" position="1250,5" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="19" name="pines_2.0" tags="" position="1925,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1172,7 +1242,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="20" name="pines_1.5" tags="" position="1125,525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="20" name="pines_1.5" tags="" position="1800,525" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1198,7 +1268,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="21" name="pines_2.1" tags="" position="1250,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="21" name="pines_2.1" tags="" position="1925,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1226,13 +1296,18 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 (display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="22" name="Player Inventory" tags="startup" position="100,925" size="200,100">(set: $inventory to (a: 
 	
 	)
-)</tw-passagedata><tw-passagedata pid="23" name="Player Quests" tags="startup" position="96,1075" size="200,100">(set: $quests to (dm:
+)</tw-passagedata><tw-passagedata pid="23" name="Player Quests" tags="startup" position="100,1075" size="200,100">(set: $quests to (dm:
 
 	&quot;getSeeds&quot;, (dm:
     	&quot;hasQuest&quot;, false,
         &quot;questComplete&quot;, false
     	),
         
+	&quot;tellJoke&quot;, (dm:
+    	&quot;hasQuest&quot;, false,
+        &quot;questComplete&quot;, false
+    	),
+	
 	&quot;unclogRiver&quot;, (dm:
     	&quot;hasQuest&quot;, false,
         &quot;questComplete&quot;, false
@@ -1253,9 +1328,9 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
         &quot;questComplete&quot;, false
     	)
 	)
-)</tw-passagedata><tw-passagedata pid="24" name="map" tags="" position="850,5" size="100,100">(set: $inventory to it + (a: &quot;seeds&quot;))
+)</tw-passagedata><tw-passagedata pid="24" name="map" tags="" position="800,25" size="100,100">(set: $inventory to it + (a: &quot;seeds&quot;))
 
-(display: &quot;mapTemplate&quot;)</tw-passagedata><tw-passagedata pid="25" name="pines_3.0" tags="" position="1375,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;mapTemplate&quot;)</tw-passagedata><tw-passagedata pid="25" name="pines_3.0" tags="" position="2050,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1281,7 +1356,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="26" name="pines_3.1" tags="" position="1375,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="26" name="pines_3.1" tags="" position="2050,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1306,7 +1381,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="27" name="pines_4.0" tags="" position="1500,25" size="100,100">(set: $inventory to it - (a: &quot;seeds&quot;))
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="27" name="pines_4.0" tags="" position="2175,25" size="100,100">(set: $inventory to it - (a: &quot;seeds&quot;))
 (set: $quests&#39;s &quot;getSeeds&quot;&#39;s &quot;questComplete&quot; to true)
 
 &lt;!----- Set UI Palette -----&gt;
@@ -1334,7 +1409,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="28" name="pines_4.2" tags="" position="1500,245" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="28" name="pines_4.2" tags="" position="2175,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1359,7 +1434,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="29" name="pines_5.0" tags="" position="1625,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="29" name="pines_5.0" tags="" position="2300,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1384,7 +1459,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="30" name="pines_4.1" tags="" position="1500,125" size="100,100">(set: $inventory to it + (a: &quot;fairydust&quot;))
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="30" name="pines_4.1" tags="" position="2175,125" size="100,100">(set: $inventory to it + (a: &quot;fairydust&quot;))
 
 &lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;pines&quot;)
@@ -1424,11 +1499,11 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 &lt;/div&gt;
 
 &lt;div class=&quot;map-btn se&quot;&gt;
-(link: &quot;Rushing Rapids&quot;)[(go-to: &quot;1&quot;)]
+(link: &quot;Rushing Rapids&quot;)[(go-to: &quot;Rapids_1.0&quot;)]
 &lt;/div&gt;
 
 &lt;div class=&quot;map-btn sw&quot;&gt;
-(link: &quot;Dusty Dunes&quot;)[(go-to: &quot;1&quot;)]
+(link: &quot;Dusty Dunes&quot;)[(go-to: &quot;Dusty_1.0&quot;)]
 &lt;/div&gt;
 
 &lt;div class=&quot;map-btn nw&quot;&gt;
@@ -1436,13 +1511,18 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 &lt;/div&gt;
 
 &lt;div class=&quot;map-btn center&quot;&gt;
-(link: &quot;Star Kingdom&quot;)[(go-to: &quot;1&quot;)]
+(link: &quot;Star Kingdom&quot;)[(go-to: &quot;Kingdom_1.0&quot;)]
 &lt;/div&gt;
 
 (if: $quests&#39;s &quot;fixEnvironment&quot;&#39;s &quot;questComplete&quot; is true)[
 &lt;div class=&quot;map-btn side&quot;&gt;(link: &quot;Magic Marsh&quot;)[(go-to: &quot;1&quot;)]&lt;/div&gt;]
 &lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="32" name="frosty_1.0" tags="" position="1825,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+}</tw-passagedata><tw-passagedata pid="32" name="frosty_1.0" tags="" position="2500,25" size="100,100">(if: $quests&#39;s &quot;tellJoke&quot;&#39;s &quot;questComplete&quot; is true)[(go-to: &quot;frosty_4.0&quot;)]
+(if: $quests&#39;s &quot;tellJoke&quot;&#39;s &quot;hasQuest&quot; is true)[(go-to: &quot;frosty_1.35&quot;)]
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;bg_image&quot; to $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;state_1&quot;)
+
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1467,7 +1547,7 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="33" name="frosty_1.1" tags="" position="1825,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="33" name="frosty_1.1" tags="" position="2500,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1484,15 +1564,16 @@ The fairy suddenly looks cross, as if offended by your presence.&quot;)
 (set: $choice1_text to &quot;Continue&quot;)
 (set: $choice1_target to &quot;frosty_1.2&quot;)
 
-(set: $choice2_text to &quot;Turn Back&quot;)
-(set: $choice2_target to &quot;frosty_1.0&quot;)
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
 
 (set: $choice3_text to &quot;&quot;)
 (set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="34" name="frosty_1.2" tags="" position="1825,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="34" name="frosty_1.2" tags="" position="2500,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;bg_image&quot; to $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;state_2&quot;)
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1519,12 +1600,37 @@ You can hear a quiet sobbing from inside an igloo to your left.&quot;)
 (set: $choice2_target to &quot;frosty_2.0&quot;)]
 
 
-(set: $choice3_text to &quot;Turn Back&quot;)
-(set: $choice3_target to &quot;frosty_1.1&quot;)
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="35" name="Untitled Passage" tags="" position="1825,325" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="36" name="frosty_2.0" tags="" position="1950,5" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="35" name="frosty_1.3" tags="" position="2725,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You enter the igloo to your left to find a snowman gently sobbing into their frozen hands.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Hello?&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.4&quot;)
+
+(set: $choice2_text to &quot;&#39;Why so sad?&#39;&quot;)
+(set: $choice2_target to &quot;frosty_1.5&quot;)
+
+(set: $choice3_text to &quot;&#39;Quit crying!&#39;&quot;)
+(set: $choice3_target to &quot;frosty_1.6&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="36" name="frosty_2.0" tags="" position="2500,350" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1543,15 +1649,15 @@ On your way in, an ice-cold drop of water drips from the doorway and onto the ba
 (set: $choice1_text to &quot;Continue&quot;)
 (set: $choice1_target to &quot;frosty_2.1&quot;)
 
-(set: $choice2_text to &quot;Turn Back&quot;)
-(set: $choice2_target to &quot;frosty_1.2&quot;)
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
 
 (set: $choice3_text to &quot;&quot;)
 (set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="37" name="frosty_2.1" tags="" position="1950,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="37" name="frosty_2.1" tags="" position="2500,450" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -1565,7 +1671,7 @@ On your way in, an ice-cold drop of water drips from the doorway and onto the ba
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;Turn Back&quot;)
+(set: $choice1_text to &quot;Go Back&quot;)
 (set: $choice1_target to &quot;frosty_1.2&quot;)
 
 (set: $choice2_text to &quot;&quot;)
@@ -1577,29 +1683,28 @@ On your way in, an ice-cold drop of water drips from the doorway and onto the ba
 &lt;!----- Display the scene template -----&gt;
 
 (display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="38" name="mainmenu" tags="" position="600,25" size="100,100">{
-(enchant: ?page, (bg: &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;))
+(enchant: ?page, (bg: &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_1.png&quot;))
 
 &lt;div class=&quot;menu-container&quot;&gt;
 &lt;div class=&quot;menu-title&quot;&gt; &lt;/div&gt;
-(link: &quot;Start Game&quot;)[(go-to: &quot;map&quot;)]
+(link: &quot;Start Game&quot;)[(go-to: &quot;intro_0.0&quot;)]
 (link: &quot;Credits&quot;)[(go-to: &quot;credits&quot;)]
 &lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="39" name="credits" tags="" position="600,145" size="100,100">{
+&lt;div class=&quot;cloud7logo&quot;&gt;&lt;/div&gt;
+}</tw-passagedata><tw-passagedata pid="39" name="credits" tags="" position="600,125" size="100,100">{
 (set: $credits_list to 
 &quot;Cloud 7 Studio
 
-Corey-Lee Stackhouse
 Ella Peach
 Enya Mclauchlan
 Jonathan Palmer
 Keara Fox
-Odell Mwamba
 Ola Fatade
 Ray Willoughby
 Therin Williams
 Tyler Hanson&quot;)
 
-(enchant: ?page, (bg: &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;))
+(enchant: ?page, (bg: &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/bg_dunes_2.png&quot;))
 
 (set: $credits = &quot;CREDITS :)&quot;)
 
@@ -1611,8 +1716,10 @@ Tyler Hanson&quot;)
 (link: &quot;Back&quot;)[(go-to: &quot;mainmenu&quot;)]
 
 &lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="40" name="intro_1.0" tags="" position="1125,880" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+
+&lt;div class=&quot;cloud7logo&quot;&gt;&lt;/div&gt;
+}</tw-passagedata><tw-passagedata pid="40" name="intro_1.0" tags="" position="1250,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;noLoc&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
@@ -1636,8 +1743,8 @@ Tyler Hanson&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="41" name="intro_1.1" tags="" position="1125,980" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="41" name="intro_1.1" tags="" position="1250,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;noLoc&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
@@ -1662,15 +1769,15 @@ A sudden flash of light blinds you...&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="42" name="intro_1.2" tags="" position="1125,1100" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="42" name="intro_1.2" tags="" position="1250,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
 (set: $dialogue to  &quot;A few seconds pass before you regain vision, but something&#39;s wrong...
-You watch as your surroundings melt away and you&#39;re suspended in a green, sickening, swirling void.&quot;)
+You watch as your surroundings melt away and you&#39;re suspended in a purple, sickening, swirling void.&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -1688,16 +1795,19 @@ You watch as your surroundings melt away and you&#39;re suspended in a green, si
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="43" name="intro_1.3" tags="" position="1125,1200" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="43" name="intro_1.3" tags="" position="1250,325" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $characterPalette&#39;s &quot;witch&quot;&#39;s &quot;charName&quot; to &quot;???&quot;)
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
 (set: $dialogue to  &quot;Flailing helplessly in the circling void, you call out for help to no avail.
 But some distance away, you notice a pair of piercing eyes.
 They&#39;re watching you.&quot;)
+
+
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -1715,8 +1825,8 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="44" name="intro_1.4.0" tags="" position="1125,1300" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="44" name="intro_1.4.0" tags="" position="1250,425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
@@ -1739,8 +1849,8 @@ They&#39;re watching you.&quot;)
 &lt;!----- Display the scene template -----&gt;
 
 (display: &quot;sceneTemplate&quot;)
-(set: $checkForInput to false)</tw-passagedata><tw-passagedata pid="45" name="intro_1.5" tags="" position="1125,1400" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(set: $checkForInput to false)</tw-passagedata><tw-passagedata pid="45" name="intro_1.5" tags="" position="1250,525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
@@ -1754,19 +1864,22 @@ They&#39;re watching you.&quot;)
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
 (set: $choice1_text to &quot;&#39;That&#39;s right...&#39;&quot;)
-(set: $choice1_target to &quot;intro_1.6&quot;)
+(set: $choice1_target to &quot;intro_2.0&quot;)
 
 (set: $choice2_text to &quot;&#39;No, I mispoke...&#39;&quot;)
 (set: $choice2_target to &quot;intro_1.4.0&quot;)
 
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="46" name="intro_1.4.1" tags="" position="1000,1300" size="100,100">(if: (words: $text_input)&#39;s length is 1)[
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="46" name="intro_1.4.1" tags="" position="1150,425" size="100,100">(if: (words: $text_input)&#39;s length is 1)[
 	(go-to: &quot;intro_1.5&quot;)
 	]
 
 &lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
@@ -1791,11 +1904,39 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="47" name="Player Preferences" tags="startup" position="100,1225" size="200,100">(set: $player_name to &quot;&quot;)</tw-passagedata><tw-passagedata pid="48" name="intro_1.6" tags="" position="1125,1520" size="100,100">(set: $player_name to $text_input)
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="47" name="Player Preferences" tags="startup" position="100,1225" size="200,100">(set: $player_name to &quot;&quot;)
+(set: $player_gender to &quot;&quot;)</tw-passagedata><tw-passagedata pid="48" name="intro_2.0" tags="" position="1500,25" size="100,100">(set: $player_name to $text_input)
 (set: $text_input to &quot;&quot;)
 
-</tw-passagedata><tw-passagedata pid="49" name="intro_0.0" tags="" position="1125,700" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;marsh&quot;)
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;&quot; + $player_name + &quot;.
+I&#39;ve been watching you. Your actions.&#39;
+The air around them crackles with electricity, like a brewing lightning storm.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;My actions?&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.1&quot;)
+
+(set: $choice2_text to &quot;&#39;What did I do?&#39;&quot;)
+(set: $choice2_target to &quot;intro_2.1&quot;)
+
+(set: $choice3_text to &quot;&#39;What about them?&#39;&quot;)
+(set: $choice3_target to &quot;intro_2.1&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="49" name="intro_0.0" tags="" position="1000,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;noLoc&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
@@ -1808,50 +1949,664 @@ They&#39;re watching you.&quot;)
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;I&#39;m a boy&quot;)
-(set: $choice1_target to &quot;intro_0.1&quot;)
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;characterSelect&quot;)
 
-(set: $choice2_text to &quot;I&#39;m a girl&quot;)
-(set: $choice2_target to &quot;intro_0.2&quot;)
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
 
 (set: $choice3_text to &quot;&quot;)
 (set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="50" name="characterSelect" tags="" position="850,125" size="100,100">{
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="50" name="characterSelect" tags="" position="1000,125" size="100,100">{
 (enchant: ?page, (bg: &quot;https://tylerhhhh.github.io/saving_star_kingdom/backgrounds/background-placeholder.png&quot;))
 
 &lt;div class=&quot;characters-container&quot;&gt;
 
 	&lt;div class=&quot;click-image&quot;&gt;
 		(link: &quot;Boy&quot;)[
-			(go-to: &quot;intro_1.0&quot;)
+			(set: $playerPalette&#39;s &quot;charSprite&quot; to &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/player_boy.png&quot;)
+			(set: $player_gender to &quot;boy&quot;)
+			(go-to: &quot;intro_0.3&quot;)
 		]
 	&lt;/div&gt;
 	
 	&lt;div class=&quot;click-image&quot;&gt;
 		(link: &quot;Girl&quot;)[
-			(go-to: &quot;intro_1.0&quot;)
+			(set: $playerPalette&#39;s &quot;charSprite&quot; to &quot;https://tylerhhhh.github.io/saving_star_kingdom/characters/player_girl.png&quot;)
+			(set: $player_gender to &quot;girl&quot;)
+			(go-to: &quot;intro_0.3&quot;)
 		]
 	&lt;/div&gt;
 	
 &lt;/div&gt;
-}</tw-passagedata><tw-passagedata pid="51" name="Kingdom_1.0" tags="" position="802,299" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+}</tw-passagedata><tw-passagedata pid="51" name="intro_0.3" tags="" position="1000,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;noLoc&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;The spinning slowly stops. You open your eyes. There is a town: with buildings, shops, houses, and a great castle in the distance. People are talking and walking around.Before you have any time to think about the crazy day you’ve had, you hear loud footsteps coming towards you, followed by a voice.&quot;)
+(if: $player_gender is &quot;boy&quot;)[
+	(set: $dialogue to &quot;Alright, young man. Let&#39;s begin...&quot;)]
+(if: $player_gender is &quot;girl&quot;)[
+	(set: $dialogue to &quot;Alright, young lady. Let&#39;s begin...&quot;)]
+
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;Approach the voice&quot;)
+(set: $choice1_text to &quot;Let&#39;s Go!&quot;)
+(set: $choice1_target to &quot;intro_1.0&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="52" name="intro_2.1" tags="" position="1500,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Of course, you&#39;re totally oblivious. What a shame.&#39;
+You can feel the electricity building around the figure begin to tickle your skin.
+&#39;I have witnessed you damaging this precious Earth. You litter, waste precious food, water and electricity, and pollute your surroundings with filth.&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;...&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.2&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="53" name="intro_2.2" tags="" position="1500,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You float in the void, utterly speechless.
+&#39;But worst of all - you ignore your community.
+Family, friends, you brush them off without second thought!&#39;
+It&#39;s glare intensifies, eyes wide with anger and excitement.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Who are you?!&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.3&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="54" name="intro_2.3" tags="" position="1500,325" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $characterPalette&#39;s &quot;witch&quot;&#39;s &quot;charName&quot; to &quot;Witch of the Marsh&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;I am your punishment! The consequence of your misdeeds!
+I am THE WITCH OF THE MARSH!&#39;
+She lets out an ear-splitting cackle as the frantic forks of electricity gather around her, illuminating her putrid green skin and warted nose beneath her cloak.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;I&#39;m sorry! I&#39;ll be better, I promise!!&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.4.1&quot;)
+
+(set: $choice2_text to &quot;&#39;I didn&#39;t know, please, just let me go!!&#39;&quot;)
+(set: $choice2_target to &quot;intro_2.4.1&quot;)
+
+(set: $choice3_text to &quot;&#39;Okay! I&#39;ve learned my lesson!!&#39;&quot;)
+(set: $choice3_target to &quot;intro_2.4.2&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="55" name="intro_2.4.1" tags="" position="1450,425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Sorry little &quot; + $player_gender + &quot;, but actions speak louder than words!
+Soon, you&#39;ll see-!&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;What&#39;s that supposed to mean-?&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.5&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="56" name="intro_2.4.2" tags="" position="1550,425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Oh, you&#39;ve learned your lesson? And so soon?!&#39;
+She cackles again, unable to contain her amusement at your response.
+&#39;Then I suppose I won&#39;t have to do this...&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Do what-?&#39;&quot;)
+(set: $choice1_target to &quot;intro_2.5&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="57" name="intro_2.5" tags="" position="1500,525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Before you can even finish your sentence, the witch thrusts her palms forwards with a maniacal laughter.
+
+Those forks of electricity become thunderous bolts of lightning, arcing through the air towards you.
+
+You&#39;re hit with an immense gust of wind, followed by a sharp surge through your body.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Yell at her&quot;)
+(set: $choice1_target to &quot;intro_2.6.1&quot;)
+
+(set: $choice2_text to &quot;Struggle&quot;)
+(set: $choice2_target to &quot;intro_2.6.2&quot;)
+
+(set: $choice3_text to &quot;Accept your fate&quot;)
+(set: $choice3_target to &quot;intro_2.6.3&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="58" name="intro_2.6.2" tags="" position="1500,625" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You try to move your body in a struggle to free yourself, but you cannot move. You&#39;re stuck in place, completely at the witch&#39;s mercy.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;...&quot;)
+(set: $choice1_target to &quot;intro_2.7&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="59" name="intro_2.6.1" tags="" position="1400,625" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You try to yell, but nothing comes out. You&#39;re stuck in place, completely at the witch&#39;s mercy.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;...&quot;)
+(set: $choice1_target to &quot;intro_2.7&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="60" name="intro_2.6.3" tags="" position="1600,625" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You do not yell or struggle, instead accepting your fate. Afterall, you&#39;re stuck in place, completely at the witch&#39;s mercy.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;...&quot;)
+(set: $choice1_target to &quot;intro_2.7&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="61" name="intro_2.7" tags="" position="1500,725" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;void&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Fret not, little &quot; + $player_gender + &quot;.
+I intend not to harm, but to teach you a lesson.&#39;
+
+Her laughter subsides as she becomes much more stern.
+
+&#39;I know of a place. A realm in trouble, as is your Earth. Help them, and I&#39;ll release you.&#39;
+
+She pauses for a while. The electricity continues to crackle over your skin.
+
+Her fingers snap, and in an instant, you&#39;re again blinded by a flash of light, followed by darkness.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Kingdom_1.0&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="62" name="frosty_1.5" tags="" position="2725,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;M-my home... it&#39;s melting away...&#39;, they utter through stifled sobs&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;How about a joke? That always cheers me up&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.65&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="63" name="frosty_1.4" tags="" position="2625,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;They don&#39;t look up from the ground but manage to utter something through tears
+
+&#39;M-my home... it&#39;s melting away...&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;How about a joke? That always cheers me up&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.65&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="64" name="frosty_1.6" tags="" position="2825,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;I can&#39;t stop... my home is melting away!&#39;, they snap back at you, still sobbing into their palms&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;How about a joke? That always cheers me up&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.65&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="65" name="frosty_1.7" tags="" position="2625,350" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Whatever... nothing matters anyway... tell me the joke...&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;What&#39;s a snowman&#39;s favourite snack?&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.8&quot;)
+
+(set: $choice2_text to &quot;&#39;What do snowmen wear on their heads?&#39;&quot;)
+(set: $choice2_target to &quot;frosty_1.8&quot;)
+
+(set: $choice3_text to &quot;&#39;Why don&#39;t snowmen ever get in trouble?&#39;&quot;)
+(set: $choice3_target to &quot;frosty_1.8&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="66" name="frosty_1.8" tags="" position="2725,350" size="100,100">(set: $setup to $lastChoice)
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;The snowman waits patiently for the punchline...&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice3_text to &quot;&#39;Frosted flakes!&#39;&quot;)
+(set: $choice3_target to &quot;frosty_1.9&quot;)
+
+(set: $choice1_text to &quot;&#39;Ice caps!&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.9&quot;)
+
+(set: $choice2_text to &quot;&#39;Because they&#39;re so chill!&#39;&quot;)
+(set: $choice2_target to &quot;frosty_1.9&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="67" name="frosty_1.9" tags="" position="2825,350" size="100,100">(set: $punchline to $lastChoice)
+
+(if: $setup is 1 and $punchline is 3)[(go-to: &quot;frosty_3.0&quot;)]
+(else-if: $setup is 2 and $punchline is 1)[(go-to: &quot;frosty_3.0&quot;)]
+(else-if: $setup is 3 and $punchline is 2)[(go-to: &quot;frosty_3.0&quot;)]
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;That wasn&#39;t very funny...&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice3_text to &quot;&#39;Let me try again&#39;&quot;)
+(set: $choice3_target to &quot;frosty_1.7&quot;)
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="68" name="frosty_1.65" tags="" position="2725,225" size="100,100">(set: $quests&#39;s &quot;tellJoke&quot;&#39;s &quot;hasQuest&quot; to true)
+(go-to: &quot;frosty_1.7&quot;)</tw-passagedata><tw-passagedata pid="69" name="frosty_1.35" tags="" position="2825,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;bg_image&quot; to $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;state_2&quot;)
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;The snowman is still sat in their melting igloo, sobbing.
+
+&#39;What do you want now...?&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;I thought of a better joke!&#39;&quot;)
+(set: $choice1_target to &quot;frosty_1.7&quot;)
+
+(set: $choice2_text to &quot;Return to map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="70" name="frosty_3.0" tags="" position="2950,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;They pause for a moment, still processing your joke.
+
+&#39;Oh... oh-ho-ho! Hahaha! That was hilarious! Ho-ho, whew!&#39;
+
+The snowman can barely contain their laughter&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Thank you, thank you&#39;&quot;)
+(set: $choice1_target to &quot;frosty_3.1&quot;)
+
+(set: $choice2_text to &quot;&#39;You&#39;re welcome!&#39;&quot;)
+(set: $choice2_target to &quot;frosty_3.1&quot;)
+
+(set: $choice3_text to &quot;&#39;Told you it&#39;d cheer you up!&#39;&quot;)
+(set: $choice3_target to &quot;frosty_3.1&quot;)
+
+(set: $quests&#39;s &quot;tellJoke&quot;&#39;s &quot;questComplete&quot; to true)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="71" name="frosty_3.1" tags="" position="2950,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Here, take my scarf as a thankyou. It&#39;s getting pretty warm around here anyway, so I won&#39;t be needing it...&#39;
+
+The snowman hands you their red, woollen scarf. It&#39;s soaked in tears, but maybe you can find a use for it.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Thanks, stay cool, dude!&#39;&quot;)
+(set: $choice1_target to &quot;frosty_3.2&quot;)
+
+(set: $choice2_text to &quot;&#39;Thanks snow much!&#39;&quot;)
+(set: $choice2_target to &quot;frosty_3.2&quot;)
+
+(set: $choice3_text to &quot;&#39;Thanks a chill-ion!&#39;&quot;)
+(set: $choice3_target to &quot;frosty_3.2&quot;)
+
+(set: $inventory to it + (a: &quot;scarf&quot;))
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="72" name="frosty_3.2" tags="" position="2950,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(if: $player_gender is &quot;boy&quot;)[
+	(set: $dialogue to  &quot;&#39;Bahahahah!!! You&#39;re one funny guy! Come back any time you like! Ho-ho-ho...&#39;&quot;)]
+(if: $player_gender is &quot;girl&quot;)[
+	(set: $dialogue to  &quot;&#39;Bahahahah!!! You&#39;re one funny girl! Come back any time you like! Ho-ho-ho...&#39;&quot;)]
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="73" name="frosty_4.0" tags="" position="3075,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;bg_image&quot; to $locationPalette&#39;s &quot;frosty&quot;&#39;s &quot;state_2&quot;)
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;frosty&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;snow&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Hello! It&#39;s snow good to see you again, heehee...!&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="74" name="Kingdom_1.0" tags="" position="1250,925" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;As the blinding light begins to fade, you notice you&#39;re no longer floating in that sick purple void, but are sat in the center of a bustling city.
+
+Before you can stand, you hear footsteps approaching, followed by a booming voice.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Turn towards the voice&quot;)
 (set: $choice1_target to &quot;Kingdom_1.1&quot;)
 
 (set: $choice2_text to &quot;Look around for help&quot;)
@@ -1860,49 +2615,85 @@ They&#39;re watching you.&quot;)
 (set: $choice3_text to &quot;Run away&quot;)
 (set: $choice3_target to &quot;Kingdom_1.3&quot;)
 
+(set: $characterPalette&#39;s &quot;king&quot;&#39;s &quot;charName&quot; to &quot;???&quot;)
+
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="52" name="Kingdom_1.1" tags="" position="801,412" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="75" name="Kingdom_1.2" tags="" position="1250,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Why hello there, my young star. We have been waiting for you to arrive. You must start your adventure right away.&#39;&quot;)
+(set: $dialogue to  &quot;You frantically search the bustling market area for someone to help you, only to notice the voice has caught up to you. 
+It belongs to a short, regal-looking figure.
+
+&#39;Worry not! I mean you no harm!&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Where am I?&#39;&quot;)
+(set: $choice1_text to &quot;&#39;Umm... hello?&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.1&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="76" name="Kingdom_1.3" tags="" position="1350,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You scramble to your feet and begin to run from the voice. The cobbled ground is tough to traverse, unlike the paved roads you&#39;re used to at home.
+
+You stumble, almost hitting the ground face-first before a short, regal-looking man catches you mid-fall.
+
+&#39;Careful! Don&#39;t go injuring yourself now.&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Umm... hi?&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.1.1&quot;)
 
-(set: $choice2_text to &quot;&#39;Who are you?&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.1.1&quot;)
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
 
-(set: $choice3_text to &quot;&#39;What is going on?&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.1.1&quot;)
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="53" name="Kingdom_1.2" tags="" position="802,527" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="77" name="Kingdom_1.1" tags="" position="1150,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;You look around for help, but there is no time the loud voice catches up to you.&#39;&quot;)
+(set: $dialogue to  &quot;You turn to see a short, regal figure stood over you.
+
+&#39;Why, hello!&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Hello?&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.1&quot;)
+(set: $choice1_text to &quot;&#39;Urm... hello mister...&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.1.1&quot;)
 
 (set: $choice2_text to &quot;&quot;)
 (set: $choice2_target to &quot;&quot;)
@@ -1912,49 +2703,52 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="54" name="Kingdom_1.3" tags="" position="800,643" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="78" name="Kingdom_1.1.1" tags="" position="1250,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+(set: $characterPalette&#39;s &quot;king&quot;&#39;s &quot;charName&quot; to &quot;King Star&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;You turn your back and start walking away, but you still hear the loud voice getting closer to you. You close your eyes and brace yourself for the confrontation.&quot;)
+(set: $dialogue to  &quot;He grins at you.
+&#39;We&#39;ve been expecting you! I&#39;m King Star of the Star Kingdom!&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Hello?&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.1&quot;)
+(set: $choice1_text to &quot;&#39;The King?!&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.4.1&quot;)
 
-(set: $choice2_text to &quot;&quot;)
-(set: $choice2_target to &quot;&quot;)
+(set: $choice2_text to &quot;&#39;The what kingdom?&#39;&quot;)
+(set: $choice2_target to &quot;Kingdom_1.4.2&quot;)
 
 (set: $choice3_text to &quot;&quot;)
 (set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="55" name="Kingdom_1.4" tags="" position="801,765" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="79" name="Kingdom_1.4.2" tags="" position="1300,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;King Star looks at you excitedly, his eyes wide, and a happy smile rests on his face. You’re not sure if you are dreaming, but everything about this new world feels real.&quot;)
+(set: $dialogue to  &quot;&#39;The Star Kingdom! Weren&#39;t you paying attention, hmm? My friend brought you here to help us out, correct?&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;A witch sent me here&#39;&quot;)
+(set: $choice1_text to &quot;&#39;You mean the evil witch?!&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.5&quot;)
 
-(set: $choice2_text to &quot;&#39;Huh?&#39;&quot;)
+(set: $choice2_text to &quot;&#39;You guys are friends..?&#39;&quot;)
 (set: $choice2_target to &quot;Kingdom_1.5&quot;)
 
 (set: $choice3_text to &quot;&quot;)
@@ -1962,64 +2756,68 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="56" name="Kingdom_1.5" tags="" position="800,883" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;Just then, as you are about to talk about the mysterious person that sent you here, you see her appear next to King Star.&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;You&#39;re the one who sent me here&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.6&quot;)
-
-(set: $choice2_text to &quot;&#39;It&#39;s you&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.6&quot;)
-
-(set: $choice3_text to &quot;&#39;Hey send me back&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.6&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="57" name="Kingdom_1.6" tags="" position="801,1009" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Ah yes, this is my good friend Witch. There is no need to be afraid. Why, we need your help, my young star, and it looks like you could use our help as well.&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Okay&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.7&quot;)
-
-(set: $choice2_text to &quot;&#39;Fine&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.7&quot;)
-
-(set: $choice3_text to &quot;&#39;Whatever&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.7&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="58" name="Kingdom_1.7" tags="" position="800,1136" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="80" name="Kingdom_1.5" tags="" position="1250,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;It’s true we need your help once you have completed your task, I will return you to your world.&#39;&quot;)
+(set: $dialogue to  &quot;Before you can finish, the witch appears beside King Star, as if she was waiting for her cue to interrupt.
+
+She stays silent with that crooked smile across her frog-face&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;It&#39;s you! Take me home, now!&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.6&quot;)
+
+(set: $choice2_text to &quot;&#39;Who are you smiling at?!&#39;&quot;)
+(set: $choice2_target to &quot;Kingdom_1.6&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="81" name="Kingdom_1.6" tags="" position="1250,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Yes, she and I have been good friends since the founding of Star Kingdom. Fear not, we simply require your help.&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Okay, fine.&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.7&quot;)
+
+(set: $choice2_text to &quot;&#39;What can I do?&#39;&quot;)
+(set: $choice2_target to &quot;Kingdom_1.7&quot;)
+
+(set: $choice3_text to &quot;&#39;Sure, if it means you&#39;ll send me home.&#39;&quot;)
+(set: $choice3_target to &quot;Kingdom_1.7&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="82" name="Kingdom_1.7" tags="" position="1250,1525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Once you&#39;ve fulfilled your duties here, I will send you home. But you must first pay for your misdeeds!&#39;
+
+Her smile grows wider, revealing rows of yellow, crooked teeth.&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -2032,37 +2830,12 @@ They&#39;re watching you.&quot;)
 (set: $choice2_text to &quot;&#39;Why do you need help&#39;&quot;)
 (set: $choice2_target to &quot;Kingdom_1.9&quot;)
 
-(set: $choice3_text to &quot;&#39;I do not want to&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.10&quot;)
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="59" name="Kingdom_1.8" tags="" position="801,1257" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;That is what I like to hear, my young star. You see, we are all hungry, and we must have our star fruit.&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Star fruit?&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.11&quot;)
-
-(set: $choice2_text to &quot;&quot;)
-(set: $choice2_target to &quot;&quot;)
-
-(set: $choice3_text to &quot;&#39;Star fruit sounds gross&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.11&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="60" name="Kingdom_1.9" tags="" position="800,1384" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="83" name="Kingdom_1.9" tags="" position="1300,1625" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2087,46 +2860,51 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="61" name="Kingdom_1.10" tags="" position="800,1501" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="84" name="Kingdom_1.8" tags="" position="1200,1625" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Why you must. We are in need, and only you, my young star, can help us. We are all going hungry; there is no star fruit to eat!&#39;&quot;)
+(set: $dialogue to  &quot;The King chirps up.
+&#39;Well, little star, in recent times our kingdom has faced somewhat of a problem - a shortage of Star Fruit.&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Star fruit?&#39;&quot;)
+(set: $choice1_text to &quot;&#39;What&#39;s Star Fruit?&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.11&quot;)
 
 (set: $choice2_text to &quot;&quot;)
 (set: $choice2_target to &quot;&quot;)
 
-(set: $choice3_text to &quot;&#39;sounds gross&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.11&quot;)
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="62" name="Kingdom_1.11" tags="" position="800,1627" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="85" name="Kingdom_1.11" tags="" position="1250,1725" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Have you have never heard of the most amazing fruit ever? Why, my young star, this will not do at all. We eat star fruit every day for breakfast, brunch, lunch, dunch, dinner, and dessert; we eat it when we do not even want it.&#39;&quot;)
+(set: $dialogue to  &quot;&#39;You&#39;ve never heard of Star Fruit?!&#39;
+
+King Star stares in disbelief.
+
+&#39;Why, Star Fruit is a delicacy here! We eat Star Fruit with every meal - breakfast, brunch, lunch, dunch, dinner and dessert!&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;That&#39;s kinda wasteful&#39;&quot;)
+(set: $choice1_text to &quot;&#39;That&#39;s a lot of Star Fruit...&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.12&quot;)
 
 (set: $choice2_text to &quot;&quot;)
@@ -2137,139 +2915,45 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="63" name="Mountain_0.2" tags="" position="2199,137" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;You see a cave and you hear sounds of clanging metal, shouting voices. You squint through the thick smoke in the air, it looks like there are dwarfs hard at work. As you make your way to the cave you are suddenly stopped by a small but bulky figure.&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Hello&#39;&quot;)
-(set: $choice1_target to &quot;Mountain_0.3&quot;)
-
-(set: $choice2_text to &quot;&quot;)
-(set: $choice2_target to &quot;&quot;)
-
-(set: $choice3_text to &quot;&quot;)
-(set: $choice3_target to &quot;&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="64" name="Kingdom_1.1.1" tags="" position="903,703" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="86" name="Kingdom_1.12" tags="" position="1250,1825" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Why, the name is King Star of the great Star Kingdom, and I need you, my young star, to help us. That is why you were sent here.&#39;&quot;)
+(set: $dialogue to  &quot;King Star begins bouncing joyfully as he continues to rattle off all the ways Star Fruit can be enjoyed. 
+
+The Witch remains still, fixating her piercing glare on the dancing monarch.&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Right&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.4&quot;)
-
-(set: $choice2_text to &quot;&#39;Of course&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.4&quot;)
-
-(set: $choice3_text to &quot;&#39;I don&#39;t belive you&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.4&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="65" name="Kingdom_1.12" tags="" position="799,1745" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;King Star begins happily walking around the space, his mind focused on talking about the star fruit. The witch is standing still, watching King Star closely. &quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;That is wasteful&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.13&quot;)
-
-(set: $choice2_text to &quot;&#39;WASTEFUL!&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.13&quot;)
-
-(set: $choice3_text to &quot;&#39;Did you hear me?&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.13&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="66" name="Kingdom_1.13" tags="" position="799,1862" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Why, my young star that is a silly idea. If Star Kingdom is known for anything, it is our love of the star fruit and metalworks from the dwarfs.&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;It is still wasteful&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.14&quot;)
-
-(set: $choice2_text to &quot;&#39;I don&#39;t know&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.14&quot;)
-
-(set: $choice3_text to &quot;&#39;Whatever you say&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.14&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="67" name="Kingdom_1.14" tags="" position="801,1990" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Enough! You are tasked by the royal throne of Star Kingdom to help us and fix the error of your ways. Do this and you will see your home again, we promise.&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;...&#39;&quot;)
+(set: $choice1_text to &quot;&#39;Uh... Your Highness?&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.15&quot;)
 
 (set: $choice2_text to &quot;&quot;)
 (set: $choice2_target to &quot;&quot;)
 
 (set: $choice3_text to &quot;&quot;)
-(set: $choice3_target to &quot;&quot;)
+(set: $choice3_target to &quot;3&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="68" name="Kingdom_1.15" tags="" position="801,2111" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="87" name="Kingdom_1.15" tags="" position="1500,925" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;King Star seems to have calmed down; he looks at you, his eyes sad, the happy smile no longer there on his face. Real or not, this world needs your help; these people need your help.&quot;)
+(set: $dialogue to  &quot;He snaps out of his fruit-induced trance, whipping his tiny head toward you.
+
+&#39;Little star. Will you help us?&#39;
+
+He&#39;s all of a sudden more serious. Real or not, this world needs your help. You must save Star Kingdom!&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -2282,26 +2966,27 @@ They&#39;re watching you.&quot;)
 (set: $choice2_text to &quot;&#39;Where should I start?&#39;&quot;)
 (set: $choice2_target to &quot;Kingdom_1.16&quot;)
 
-(set: $choice3_text to &quot;&#39;Only because I want to go&#39;&quot;)
+(set: $choice3_text to &quot;&#39;Fine. But only because I want to leave.&#39;&quot;)
 (set: $choice3_target to &quot;Kingdom_1.16&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="69" name="Kingdom_1.16" tags="" position="801,2228" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="88" name="Kingdom_1.16" tags="" position="1500,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;King Star jumps up with excitement; his sudden burst of energy scares the witch briefly.&quot;)
+(set: $dialogue to  &quot;King Star jumps with glee.
+&#39;Oh, thank you, little star! I just knew you&#39;d be the one!&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;Woa&#39;&quot;)
+(set: $choice1_text to &quot;&#39;No problem!&#39;&quot;)
 (set: $choice1_target to &quot;Kingdom_1.17&quot;)
 
 (set: $choice2_text to &quot;&quot;)
@@ -2312,39 +2997,43 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="70" name="Kingdom_1.17" tags="" position="802,2345" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Here, take this map, my young star, and use it to go to where you need to. The star fruit comes from Dusty Dunes; you should begin there. Oh, and do hurry,it is nearly brunch.&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Thanks&#39;&quot;)
-(set: $choice1_target to &quot;Kingdom_1.18&quot;)
-
-(set: $choice2_text to &quot;&#39;Super cool&#39;&quot;)
-(set: $choice2_target to &quot;Kingdom_1.18&quot;)
-
-(set: $choice3_text to &quot;&#39;I don&#39;t like maps&#39;&quot;)
-(set: $choice3_target to &quot;Kingdom_1.18&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="71" name="Kingdom_1.18" tags="" position="799,2463" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="89" name="Kingdom_1.17" tags="" position="1500,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Come find me in Magic Marsh when you have saved Star Kingdom. We are all counting on you; remember that.&#39;&quot;)
+(set: $dialogue to  &quot;&#39;Take this map. Simply point where you&#39;d like to go, and you&#39;ll be transported there in no time.&#39;
+
+She thrusts a scroll tied with a length of dirty twine at you.
+
+You sheepishly take it from her bony hand.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Thank you...&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.18&quot;)
+
+(set: $choice2_text to &quot;&#39;This thing looks super old...&#39;&quot;)
+(set: $choice2_target to &quot;Kingdom_1.18&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="90" name="Kingdom_1.18" tags="" position="1500,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;witch&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Find me in Magic Marsh once your quest is complete. There, I will send you home.&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
@@ -2357,27 +3046,27 @@ They&#39;re watching you.&quot;)
 (set: $choice2_text to &quot;&#39;You can count on me&#39;&quot;)
 (set: $choice2_target to &quot;Kingdom_1.19&quot;)
 
-(set: $choice3_text to &quot;&#39;Sure&#39;&quot;)
+(set: $choice3_text to &quot;&#39;Yes ma&#39;am!&#39;&quot;)
 (set: $choice3_target to &quot;Kingdom_1.19&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="72" name="Kingdom_1.19" tags="" position="801,2581" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="91" name="Kingdom_1.19" tags="" position="1500,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;You leave for your adventure, excited to see this magical new world. King Star waves quickly and with his whole body, even standing on his tiptoes, swinging his arm wildly as you walk away from him. The witch stands still, arms resting on her hips; she only stares at you as you continue to walk.&quot;)
+(set: $dialogue to  &quot;&#39;And do hurry! I&#39;m not sure if the people will make it to brunch... ha.. haha..&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;Look at map&quot;)
-(set: $choice1_target to &quot;map&quot;)
+(set: $choice1_text to &quot;Open the map&quot;)
+(set: $choice1_target to &quot;Kingdom_1.20&quot;)
 
 (set: $choice2_text to &quot;&quot;)
 (set: $choice2_target to &quot;&quot;)
@@ -2387,7 +3076,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="73" name="Mountain_0.1" tags="" position="2201,19" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="92" name="Mountain_0.1" tags="" position="1800,925" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2412,7 +3101,32 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="74" name="Mountain_0.3" tags="" position="2200.5,253" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="93" name="Mountain_0.2" tags="" position="1800,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You see a cave and you hear sounds of clanging metal, shouting voices. You squint through the thick smoke in the air, it looks like there are dwarfs hard at work. As you make your way to the cave you are suddenly stopped by a small but bulky figure.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Hello&#39;&quot;)
+(set: $choice1_target to &quot;Mountain_0.3&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="94" name="Mountain_0.3" tags="" position="1800,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2437,7 +3151,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="75" name="Mountain_0.4" tags="" position="2201.5,365" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="95" name="Mountain_0.4" tags="" position="1800,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2462,7 +3176,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="76" name="Mountain_0.5" tags="" position="2202.5,485" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="96" name="Mountain_0.5" tags="" position="1800,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2487,7 +3201,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="77" name="Mountain_0.6" tags="" position="2201.5,603" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="97" name="Mountain_0.6" tags="" position="1750,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2512,32 +3226,32 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="78" name="Mountain_0.7" tags="" position="2200.5,722" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="98" name="Mountain_0.7" tags="" position="1850,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
 (set: $currentCharacterPalette to $characterPalette&#39;s &quot;dwarf&quot;)
 
 &lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;It ain’t no good up here kid, we’ve got our hands full that dragon stays away because of all the noise, but it’s getting hard to do so with people in Star Kingdom demanding our metal that’s why there’s so much smoke&#39;&quot;)
+(set: $dialogue to  &quot;&#39;It’s the rules for a reason, this smoke is not good to breathe and with the dragon up on the mountain you have to be safe&#39;&quot;)
 
 &lt;!----- Set choices -----&gt;
 &lt;!-- Choice text is displayed in the UI button                         --&gt;
 &lt;!-- Choice target is the name of the target passage             --&gt;
 &lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
 
-(set: $choice1_text to &quot;&#39;I&#39;ll leave&#39;&quot;)
-(set: $choice1_target to &quot;Mountain_0.9&quot;)
+(set: $choice1_text to &quot;&#39;I&#39;ll go and get it&#39;&quot;)
+(set: $choice1_target to &quot;Mountain_0.8&quot;)
 
-(set: $choice2_text to &quot;&quot;)
-(set: $choice2_target to &quot;&quot;)
+(set: $choice2_text to &quot;&#39;Fine&#39;&quot;)
+(set: $choice2_target to &quot;Mountain_0.8&quot;)
 
 (set: $choice3_text to &quot;&quot;)
 (set: $choice3_target to &quot;&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="79" name="Mountain_0.8" tags="" position="2199.5,844" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="99" name="Mountain_0.8" tags="" position="1800,1525" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2562,7 +3276,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="80" name="Mountain_0.9" tags="" position="2197.5,962" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="100" name="Mountain_0.9" tags="" position="1800,1625" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2587,7 +3301,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="81" name="Mountain_1.0" tags="" position="2305.5,18" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="101" name="Mountain_1.0" tags="" position="2025,925" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2612,7 +3326,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="82" name="Mountain_1.1" tags="" position="2306.5,123" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="102" name="Mountain_1.1" tags="" position="2025,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2637,7 +3351,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="83" name="Mountain_1.2" tags="" position="2306.5,229" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="103" name="Mountain_1.2" tags="" position="2025,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2662,32 +3376,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="84" name="Mountain_1.3" tags="" position="2305.5,337" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;dwarf&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;You don&#39;t you? get out of here kid&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Altight&#39;&quot;)
-(set: $choice1_target to &quot;Mountain_1.4&quot;)
-
-(set: $choice2_text to &quot;&quot;)
-(set: $choice2_target to &quot;&quot;)
-
-(set: $choice3_text to &quot;&quot;)
-(set: $choice3_target to &quot;&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="85" name="Mountain_1.4" tags="" position="2305.5,442" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="104" name="Mountain_1.4" tags="" position="2025,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2712,7 +3401,32 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="86" name="Mountain_1.5" tags="" position="2307.5,548" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="105" name="Mountain_1.3" tags="" position="1925,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;dwarf&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;You don&#39;t you? get out of here kid&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Altight&#39;&quot;)
+(set: $choice1_target to &quot;Mountain_1.4&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="106" name="Mountain_1.5" tags="" position="2125,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2737,7 +3451,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="87" name="Mountain_1.6" tags="" position="2307.5,656" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="107" name="Mountain_1.6" tags="" position="2025,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2762,7 +3476,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="88" name="Mountain_2.0" tags="" position="2464.5,17" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="108" name="Mountain_2.0" tags="" position="2250,925" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2787,7 +3501,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="89" name="Mountain_2.1" tags="" position="2466.5,130" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="109" name="Mountain_2.1" tags="" position="2250,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2812,7 +3526,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="90" name="Mountain_2.2" tags="" position="2468.5,243" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="110" name="Mountain_2.2" tags="" position="2250,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2837,7 +3551,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="91" name="Mountain_2.3" tags="" position="2468.5,353" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="111" name="Mountain_2.3" tags="" position="2250,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2862,7 +3576,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="92" name="Mountain_2.4" tags="" position="2467.5,464" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="112" name="Mountain_2.4" tags="" position="2200,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2887,32 +3601,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="93" name="Moutain_2.5" tags="" position="2466.5,581" size="100,100">&lt;!----- Set UI Palette -----&gt;
-(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
-
-&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
-(set: $currentCharacterPalette to $characterPalette&#39;s &quot;dwarf&quot;)
-
-&lt;!----- Set variables to show in the UI -----&gt;
-(set: $dialogue to  &quot;&#39;Stop? What you talking about?&#39;&quot;)
-
-&lt;!----- Set choices -----&gt;
-&lt;!-- Choice text is displayed in the UI button                         --&gt;
-&lt;!-- Choice target is the name of the target passage             --&gt;
-&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
-
-(set: $choice1_text to &quot;&#39;Cutting down the trees&#39;&quot;)
-(set: $choice1_target to &quot;Mountain_0.2&quot;)
-
-(set: $choice2_text to &quot;&#39;You&#39;re Polluting the air&#39;&quot;)
-(set: $choice2_target to &quot;&quot;)
-
-(set: $choice3_text to &quot;&#39;You&#39;re Starving Star Kingdom&#39;&quot;)
-(set: $choice3_target to &quot;&quot;)
-
-&lt;!----- Display the scene template -----&gt;
-
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="94" name="Mountain_2.3.1" tags="" position="2574.5,350" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="113" name="Mountain_2.3.1" tags="" position="2300,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2937,7 +3626,7 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="95" name="Mountain_2.3.2" tags="" position="2683.5,348" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="114" name="Mountain_2.3.2" tags="" position="2400,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
 (set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
 
 &lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
@@ -2962,7 +3651,1106 @@ They&#39;re watching you.&quot;)
 
 &lt;!----- Display the scene template -----&gt;
 
-(display: &quot;sceneTemplate&quot;)</tw-passagedata></tw-storydata>
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="115" name="Mountain_2.5" tags="" position="2250,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;mountain&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;dwarf&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;Stop? What you talking about?&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;Cutting down the trees&#39;&quot;)
+(set: $choice1_target to &quot;Mountain_0.2&quot;)
+
+(set: $choice2_text to &quot;&#39;You&#39;re Polluting the air&#39;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&#39;You&#39;re Starving Star Kingdom&#39;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="116" name="Kingdom_1.4.1" tags="" position="1200,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+
+(set: $characterPalette&#39;s &quot;king&quot;&#39;s &quot;charName&quot; to &quot;King Star&quot;)
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;king&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;&#39;That&#39;s right! I beleive you were sent here by my friend, yes?&#39;&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;&#39;You mean the evil witch?!&#39;&quot;)
+(set: $choice1_target to &quot;Kingdom_1.5&quot;)
+
+(set: $choice2_text to &quot;&#39;You guys are friends..?&#39;&quot;)
+(set: $choice2_target to &quot;Kingdom_1.5&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="117" name="Kingdom_1.20" tags="" position="1500,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;kingdom&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You unwrap the ancient map&#39;s twine bindings.
+Upon it, you see a star-shaped island - each point has its own biome and settlements, and in the center stands the city in which you currently find yourself.
+
+You raise a finger to the map, and feel an energy build around you. As your finger lands on the page, you are immediately whisked away.
+
+It&#39;s time to begin your journey.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="118" name="Dusty_1.0" tags="" position="2625,925" size="100,100">
+(if: $quests&#39;s &quot;getGoggles&quot;&#39;s &quot;hasQuest&quot; is true and $inventory contains (a:&quot;headband&quot;))[(go-to: &quot;dusty_5.0&quot;)]
+
+(if: $quests&#39;s &quot;getGoggles&quot;&#39;s &quot;hasQuest&quot; is true and $inventory does not contain (a:&quot;headband&quot;))[(go-to: &quot;dusty_4.0&quot;)]
+
+(if: $quests&#39;s &quot;unclogRiver&quot;&#39;s &quot;hasQuest&quot; is true)[(go-to: &quot;Dusty_2.8&quot;)]
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You decide to try your luck with some sunshine and make your way over to Dusty Dunes. As you approach, you spot what seems to be a ghost town, only finding cacti and sand houses next to an oasis.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_1.1&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="119" name="Dusty_1.1" tags="" position="2625,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Once you get closer to the town, you notice that for some reason, these cacti are wearing clothes. You don’t think much of it as it’s one of the least strange things you’ve seen today.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_2.0&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="120" name="Dusty_2.0" tags="" position="2750,925" size="100,100">&lt;!----- hasnt unclogged river -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You continue walking and as you pass one of the cacti you hear: &quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_2.2&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="121" name="Dusty_2.1" tags="" position="2750,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You continue walking and as you pass one of the cacti you hear: &quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_2.1&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="122" name="Dusty_2.2" tags="" position="2750,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;hey partner, please help us... &quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;You’re alive?!&quot;)
+(set: $choice1_target to &quot;Dusty_2.3&quot;)
+
+(set: $choice2_text to &quot;Is that voice coming from the cactus?&quot;)
+(set: $choice2_target to &quot;Dusty_2.4&quot;)
+
+(set: $choice3_text to &quot;huh, who said that?&quot;)
+(set: $choice3_target to &quot;Dusty_2.5&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="123" name="Dusty_2.3" tags="" position="2650,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Yes, of course, partner. All the cacti you see here in Dusty Dunes are alive. Although nowadays things have slowed down for us all.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;How can I help you?&quot;)
+(set: $choice1_target to &quot;Dusty_2.6&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="124" name="Dusty_2.4" tags="" position="2750,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;ahah you must be new here, all the cacti you see are very much alive, but we are not well.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;How can I help you?&quot;)
+(set: $choice1_target to &quot;Dusty_2.6&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="125" name="Dusty_2.5" tags="" position="2850,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Behind you partner, I&#39;m the cactus with a mouth. And my name is... get this...  Jacktus.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;How can I help you?&quot;)
+(set: $choice1_target to &quot;Dusty_2.6&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="126" name="Dusty_2.6" tags="" position="2750,1325" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;As you can see, our oasis which used to overflow with water has completely dried up! Those pesky mermaids are holding all the water for themselves.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_2.61&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="127" name="Dusty_2.61" tags="" position="2750,1425" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Even though we can live with little amounts of water, we can’t produce our delicious star fruit without it. Could you please go speak to them to see if they can change their minds.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Of course I&#39;ll help you, that’s why I&#39;m here!&quot;)
+(set: $choice1_target to &quot;Dusty_2.7&quot;)
+
+(set: $choice2_text to &quot;I’ve heard a lot about this star fruit. Everyone loves it. I’ll do my best.&quot;)
+(set: $choice2_target to &quot;Dusty_2.7&quot;)
+
+(set: $choice3_text to &quot;I’m not sure I&#39;ll be able to change their minds, but I&#39;ll do it!&quot;)
+(set: $choice3_target to &quot;Dusty_2.7&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="128" name="Dusty_2.7" tags="" position="2750,1525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Thank you partner, yeehaw!&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to Map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+(set: $quests&#39;s &quot;unclogRiver&quot;&#39;s &quot;hasQuest&quot; to true)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="129" name="Dusty_2.8" tags="" position="2975,925" size="100,100">(if: $quests&#39;s &quot;unclogRiver&quot;&#39;s &quot;questComplete&quot; is true)[(go-to: &quot;Dusty_3.0&quot;)]
+
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Howdy partner, we still don&#39;t have any water in our Oasis&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Don&#39;t worry Jacktus, i&#39;m on it&quot;)
+(set: $choice1_target to &quot;Dusty_2.9&quot;)
+
+(set: $choice2_text to &quot;What do I need to do?&quot;)
+(set: $choice2_target to &quot;Dusty_2.91&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="130" name="Dusty_2.9" tags="" position="2925,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Thanks partner, we&#39;re counting on you&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="131" name="Dusty_2.91" tags="" position="3025,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Go see the mermaids at Rushing Rapids, they&#39;re holding back all our water&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;I&#39;ll go see them now&quot;)
+(set: $choice1_target to &quot;Dusty_2.92&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="132" name="Dusty_2.92" tags="" position="3025,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Thanks Partner&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="133" name="Dusty_3.0" tags="" position="3200,925" size="100,100">&lt;!----- Player has unclogged river -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You make your way to dusty dunes, as you approach, you see the oasis is full, filled with new life and an abundance of star fruit.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_3.1&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="134" name="Dusty_3.1" tags="" position="3200,1025" size="100,100">Player has unclogged river
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Howdy partner! Thank you for bringing water back to the oasis for us cactus folk, we cannot thank you enough.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;It was no problem. All it took was a bit of the fairies magical dust.&quot;)
+(set: $choice1_target to &quot;Dusty_3.2&quot;)
+
+(set: $choice2_text to &quot;You’re welcome Jacktus, I hope I will be able to try this famous fruit now.&quot;)
+(set: $choice2_target to &quot;Dusty_3.3&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="135" name="Dusty_3.2" tags="" position="3150,1125" size="100,100">Player has unclogged river
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;I knew you’d be the one for the job, thank you partner.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Thanks Jacktus, I’m glad I was able to help.&quot;)
+(set: $choice1_target to &quot;Dusty_3.4&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="136" name="Dusty_3.3" tags="" position="3250,1125" size="100,100">Player has unclogged river
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You can have as much as you’d like, you’re the reason we have any in the first place.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Thanks Jacktus, I’m glad I was able to help.&quot;)
+(set: $choice1_target to &quot;Dusty_3.4&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="137" name="Dusty_3.4" tags="" position="3250,1225" size="100,100">Player has unclogged river
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Safe travels&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="138" name="Dusty_4.0" tags="" position="3375,925" size="100,100">&lt;!----- Player has not collected the headband -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Howdy partner, nice to see you!&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Nice to see you too Jacktus!&quot;)
+(set: $choice1_target to &quot;Dusty_4.1&quot;)
+
+(set: $choice2_text to &quot;Howdy partner!&quot;)
+(set: $choice2_target to &quot;Dusty_4.1&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="139" name="Dusty_4.1" tags="" position="3375,1025" size="100,100">&lt;!----- Player has not collected the headband -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;There&#39;s not much we need around here anymore. We&#39;re producing all the fruit we need.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Dusty_4.2&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="140" name="Dusty_4.2" tags="" position="3375,1125" size="100,100">&lt;!----- Player has not collected the headband -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;If you haven&#39;t already, go to see the snowmen at Frosty Farlands. I heard they need some help.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="141" name="Dusty_5.0" tags="" position="3550,925" size="100,100">&lt;!----- Player has collected the headband -----&gt;
+
+&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;I see you’ve got a new headband, I like your style!&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;I got it from the snowmen in Frosty Farlands. They said it might come in useful.&quot;)
+(set: $choice1_target to &quot;Dusty_5.1&quot;)
+
+(set: $choice2_text to &quot;Funny story, all I did was tell them a joke and they loved it so much they gave me this headband.&quot;)
+(set: $choice2_target to &quot;Dusty_5.1&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="142" name="Dusty_5.1" tags="" position="3550,1025" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Well I think I have a way to improve your look, I can turn this into fashionable goggles. Which I hear the dwarves require to enter Mt. Mountain.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;That would be incredible, I’ve been needing to find a way in there.&quot;)
+(set: $choice1_target to &quot;Dusty_5.2&quot;)
+
+(set: $choice2_text to &quot;Not sure how fashionable goggles will be but if you think it will help save this kingdom I’ll take them.&quot;)
+(set: $choice2_target to &quot;Dusty_5.3&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="143" name="Dusty_5.2" tags="" position="3500,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Well partner, easy as that. Take these goggles to Mt.Mountain and the Dwarves should let you in right away. &quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Thank you Jacktus&quot;)
+(set: $choice1_target to &quot;Dusty_5.4&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="144" name="Dusty_5.3" tags="" position="3600,1125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Trust me, goggles are all the hype nowadays. Take these to the Dwarves at Mt. Mountain and you’ll be let right in.&quot;)
+
+
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Thank you Jacktus&quot;)
+(set: $choice1_target to &quot;Dusty_5.4&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="145" name="Dusty_5.4" tags="" position="3550,1225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;dunes&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;cactus&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;See you around partner, YEEHAW!&quot;)
+
+(set: $inventory to it - (a: &quot;headband&quot;))
+(set: $inventory to it + (a: &quot;goggles&quot;))
+(set: $quests&#39;s &quot;getGoggles&quot;&#39;s &quot;questComplete&quot; to true)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Return to map&quot;)
+(set: $choice1_target to &quot;map&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="146" name="Rapids_1.0" tags="" position="3400,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You head to the place called Rushing Rapids and you see a giant river with grass and plant life around it &quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.1&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="147" name="Rapids_1.1" tags="" position="3400,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You begin to see that this river is not normal. It&#39;s flooded and you can see bits of rubbish floating in the river&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.11&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="148" name="Rapids_1.11" tags="" position="3400,225" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You begin to see that this river is not normal. It&#39;s flooded and you can see bits of rubbish floating in the river&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.12&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="149" name="Rapids_1.12" tags="" position="3400,325" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;noChar&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;The river water is scarily still but you see movement ripples and waves underneath the water.&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.13&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="150" name="Rapids_1.13" tags="" position="NaN,NaN" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;They look like a person but they’re green? And blue? And slimy? And have no legs?&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.14&quot;)
+
+(set: $choice2_text to &quot;Return to Map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="151" name="Rapids_1.14" tags="" position="3400,525" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Excuse me can you like go away or something we’re all kind of busy right now&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.15&quot;)
+
+(set: $choice2_text to &quot;Return to map&quot;)
+(set: $choice2_target to &quot;map&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="152" name="Rapids_1.15" tags="" position="3400,625" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You see a mermaid? She has an annoyed look written on her face, she looks you up and down judging you and her lips curl into a sneer&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;Continue&quot;)
+(set: $choice1_target to &quot;Rapids_1.16&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="153" name="Rapids_1.16" tags="" position="3625,25" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Can you stop being weird and go?&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;I&#39;m here to save Star Kingdom!&quot;)
+(set: $choice1_target to &quot;Rapids_1.17&quot;)
+
+(set: $choice2_text to &quot;Is this where you live?&quot;)
+(set: $choice2_target to &quot;Rapids_1.18&quot;)
+
+(set: $choice3_text to &quot;Where are your legs?&quot;)
+(set: $choice3_target to &quot;Rapids_1.19&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="154" name="Rapids_1.17" tags="" position="3525,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;Okay, and?&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;I want to help!&quot;)
+(set: $choice1_target to &quot;Rapids_1.2&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="155" name="Rapids_1.18" tags="" position="3625,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;It used to look like way nicer than this&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;I&#39;m here to help where I can!&quot;)
+(set: $choice1_target to &quot;Rapids_1.2&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="156" name="Rapids_1.19" tags="" position="3725,125" size="100,100">&lt;!----- Set UI Palette -----&gt;
+(set: $currentLocationPalette to $locationPalette&#39;s &quot;rapids&quot;)
+
+&lt;!----- Set the current NPC character to show in the UI. Use &quot;noChar&quot; for none -----&gt;
+(set: $currentCharacterPalette to $characterPalette&#39;s &quot;merfolk&quot;)
+
+&lt;!----- Set variables to show in the UI -----&gt;
+(set: $dialogue to  &quot;You really are just like any other human&quot;)
+
+&lt;!----- Set choices -----&gt;
+&lt;!-- Choice text is displayed in the UI button                         --&gt;
+&lt;!-- Choice target is the name of the target passage             --&gt;
+&lt;!-- Set choice text to &quot;&quot; to remove that choice from the UI  --&gt;
+
+(set: $choice1_text to &quot;That may be true, but i&#39;m here to help in any way possible!&quot;)
+(set: $choice1_target to &quot;Rapids_1.2&quot;)
+
+(set: $choice2_text to &quot;&quot;)
+(set: $choice2_target to &quot;&quot;)
+
+(set: $choice3_text to &quot;&quot;)
+(set: $choice3_target to &quot;&quot;)
+
+&lt;!----- Display the scene template -----&gt;
+
+(display: &quot;sceneTemplate&quot;)</tw-passagedata><tw-passagedata pid="157" name="Untitled Passage" tags="" position="NaN,725" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="158" name="Untitled Passage 1" tags="" position="NaN,NaN" size="100,100">Double-click this passage to edit it.</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
